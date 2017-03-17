@@ -6,11 +6,11 @@ const AccountStatus = ({status}) => {
 
   status = status || '';
 
-  return <select className="AccountStatusSelect" defaultValue={status} alt={status}>
-  {options.map(op => {
-    return <option value={op}>{op}</option>
+  return <span className="AccountStatusSelect"><select defaultValue={status} alt={status}>
+  {options.map((op, index) => {
+    return <option key={index} value={op}>{op}</option>
   })}
-  </select>
+  </select></span>
 }
 
 export default AccountStatus;

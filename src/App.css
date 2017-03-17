@@ -1,0 +1,40 @@
+.ClientList .ClientRow {
+  margin-bottom: 0.75em;
+}
+
+.ClientList .ClientRow .ClientRow_Title {
+  margin-bottom: 0.25em;
+  background-color: #eee
+}
+
+.AccountList {
+  margin-left: 1em;
+}
+.AccountList .AccountRowName {
+  display: inline-block;
+  width: 200px;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+.AccountList .AccountStatusSelect {
+  display: inline-block;
+  width: 45px;
+  border-right: 1px solid #ccc;
+}
+.AccountList span.AccountStatusSelect > select {
+  border: none;
+}
+
+.MonthHeader {
+  margin-left: 225px;
+}
+.MonthHeader > span {
+  font-size: 0.7em;
+  display: inline-block;
+  width: 45px;
+  border-right: 1px solid #ccc;
+  text-align: center;
+}
+.MonthHeader > span:first-of-type {
+  border-left: 1px solid #ccc;
+}

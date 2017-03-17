@@ -1,5 +1,10 @@
 import padStart from './util/padStart'
 
+var viewData = {
+  monthsToDisplay: ['16/09', '16/10', '16/11', '16/12', '17/01', '17/02', '17/03', '17/04']
+}
+export {viewData};
+
 var baseStatus = {}
 
 var key;
@@ -8,8 +13,8 @@ for (var i=0; i<24; i++) {
   baseStatus[key] = (i<14) ? 'C' : null;
 }
 
-var clientList = [
-  {
+var clients = {
+  '9823744' : {
     id: '9823744',
     name: 'Alphafa Group',
     accounts: [
@@ -22,7 +27,7 @@ var clientList = [
     ]
   },
 
-  {
+  '1238933': {
     id: '1238933',
     name: 'Automation Heroes',
     accounts: [
@@ -34,7 +39,7 @@ var clientList = [
     ]
   },
 
-  {
+  '2389738': {
     id: '2389738',
     name: 'Camp Four Creative',
     accounts: [
@@ -45,15 +50,13 @@ var clientList = [
       { name: 'Stripe' },
     ]
   },
-];
+};
 
 // Fill base status for all clients
-clientList.forEach(client => {
-  client.accounts.forEach(account => {
+Object.keys(clients).forEach(clientId => {
+  clients[clientId].accounts.forEach(account => {
     account.status = {...baseStatus}
   })
 });
 
-export default {
-  clientList: clientList
-}
+export { clients }

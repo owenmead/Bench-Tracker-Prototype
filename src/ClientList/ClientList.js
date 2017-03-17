@@ -1,12 +1,11 @@
 import React from 'react';
-import './ClientList.css'
 
 import ClientRow from './ClientRow'
 
-const ClientList = ({clients}) => {
+const ClientList = ({list}) => {
   return (
     <div className="ClientList">
-      {clients.map(client => <ClientRow key={client.id} client={client} />)}
+      {list.map(client => <ClientRow key={client.id} client={client} />)}
     </div>
   );
 }
