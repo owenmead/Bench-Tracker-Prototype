@@ -1,9 +1,19 @@
+import padStart from './util/padStart'
+
+var baseStatus = {}
+
+var key;
+for (var i=0; i<24; i++) {
+  key = '' + (16+Math.floor(i/12)) + '/' + padStart(i%12+1, 2, '0');
+  baseStatus[key] = (i<14) ? 'C' : null;
+}
+
 var clientList = [
   {
     id: '9823744',
     name: 'Alphafa Group',
     accounts: [
-      { name: 'Chase Credit Card - 9420' },
+      { name: 'Chase Credit Card - 9420', },
       { name: 'Bank of America - Checking' },
       { name: 'Bank of America - Savings' },
       { name: 'PayPal' },
@@ -35,7 +45,14 @@ var clientList = [
       { name: 'Stripe' },
     ]
   },
-]
+];
+
+// Fill base status for all clients
+clientList.forEach(client => {
+  client.accounts.forEach(account => {
+    account.status = {...baseStatus}
+  })
+});
 
 export default {
   clientList: clientList

@@ -1,3 +1,14 @@
 .AccountList {
   margin-left: 1em;
 }
+
+.AccountList .AccountRowName {
+  display: inline-block;
+  width: 200px;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+select.AccountStatusSelect {
+  border: none;
+}
