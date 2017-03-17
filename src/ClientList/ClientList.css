@@ -1,0 +1,9 @@
+.ClientList .ClientRow {
+  margin-bottom: 1.5em;
+}
+
+.ClientList .ClientRow .ClientRow_Title {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.25em;
+  margin-bottom: 0.5em;
+}
