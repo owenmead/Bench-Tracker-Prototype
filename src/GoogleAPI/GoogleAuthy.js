@@ -1,38 +1,38 @@
-import React, { Component } from 'react';
+import React from 'react'
+import { connect } from 'react-redux'
+import { user_signin, user_signout } from '../Store/Actions/index'
 
-import API from './API'
+let GoogleAuthy = ({ isSignedIn, signInFn, signOutFn }) => {
 
-import ctrl from '../Controller.js'
+  var btn = isSignedIn ?
+              <button onClick={signOutFn}>Sign Out</button> :
+              <button onClick={signInFn}>Sign In</button>;
 
-class GoogleAuthy extends Component {
+  return (
+    <div>Do all da google! {btn}</div>
+  )
+}
 
-  signIn() {
-    ctrl.broadcast('GOOGLE_SIGNIN');
-  }
-
-  signOut() {
-    ctrl.broadcast('GOOGLE_SIGNOUT');
-  }
-
-  render() {
-    var action;
-    if (!API.isLoaded) {
-      action = <div>Loading...</div>
-    } else {
-      if (API.isSignedIn) {
-        action = <div><button onClick={this.signOut}>Sign Out</button> check js console</div>
-      } else {
-        action = <button onClick={this.signIn}>Sign In</button>
-      }
-    }
-
-    return (
-      <div>
-        Do All Da Google!
-        {action}
-      </div>
-    );
+const mapStateToProps = (state) => {
+  return {
+    isSignedIn : state.googleAuth.isSignedIn
   }
 }
 
-export default GoogleAuthy;
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    signInFn: () => {
+      dispatch(user_signin());
+    },
+    signOutFn: () => {
+      dispatch(user_signout());
+    }
+  }
+}
+
+GoogleAuthy = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GoogleAuthy)
+
+export default GoogleAuthy

@@ -1,35 +1,16 @@
-
 import gapi from './google_api'
-import ctrl from '../Controller.js'
 
-ctrl.subscribe((eventName, data) => {
-  switch(eventName) {
-    case 'GOOGLE_SIGNIN':
-      gapi.auth2.getAuthInstance().signIn();
-      break;
-    case 'GOOGLE_SIGNOUT':
-      gapi.auth2.getAuthInstance().signOut();
-      break;
-    case 'GOOGLE_AUTHCHANGE':
-      if (data.isSignedIn) {
-        listMajors();
-      } else {
-        // document.getElementById('content').innerHTML = 'All Gone';
-      }
-      break;
-
-    case 'GOOGLE_SHEET_DATA':
-      data.values.forEach(val => console.log(val))
-      break
-
-    default:
-      break;
-  }
-});
+var authChangeObservers = [];
+// Will likely need an unsubscribe
 
 var API_OBJ = {
-  isLoaded: false,
-  isSignedIn: false
+  isSignedIn: false,
+  signIn: () => gapi.auth2.getAuthInstance().signIn(),
+  signOut: () => gapi.auth2.getAuthInstance().signOut(),
+  listenAuthChange: listener => authChangeObservers.push(listener),
+  getProfile: getProfile,
+
+  getMajors: getMajors
 };
 
 export default API_OBJ;
@@ -62,37 +43,51 @@ function init() {
     }).then(function () {
       // Listen for sign-in state changes.
       gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
       // Handle the initial sign-in state.
       updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-
-      API_OBJ.isLoaded = true;
-      ctrl.broadcast('GOOGLE_LOADED')
     });
   })
 }
 function updateSigninStatus(isSignedIn) {
-  ctrl.broadcast('GOOGLE_AUTHCHANGE', {isSignedIn:isSignedIn})
   API_OBJ.isSignedIn = isSignedIn;
+  authChangeObservers.forEach(listener => listener(isSignedIn))
+}
+
+function getProfile() {
+  if (API_OBJ.isSignedIn) {
+    var g_profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+    return {
+      id: g_profile.getId(),
+      name: g_profile.getName(),
+      givenName: g_profile.getGivenName(),
+      familyName: g_profile.getFamilyName(),
+      imageUrl: g_profile.getImageUrl(),
+      email: g_profile.getEmail(),
+    }
+  } else {
+    return { error: 'User Not Signed In'}
+  }
 }
 
 /**
  * Print the names and majors of students in a sample spreadsheet:
  * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  */
-function listMajors() {
-  gapi.client.sheets.spreadsheets.values.get({
+function getMajors() {
+  return gapi.client.sheets.spreadsheets.values.get({
     spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
     range: 'Class Data!A2:E',
   }).then(function(response) {
     var range = response.result;
     if (range.values.length > 0) {
-      ctrl.broadcast('GOOGLE_SHEET_DATA', {values:range.values})
+      return range.values;
     } else {
-      ctrl.broadcast('GOOGLE_SHEET_DATA', {error:'No data found'})
+      console.warn('No data back from Google');
+      return []
     }
   }, function(response) {
-    ctrl.broadcast('GOOGLE_SHEET_DATA', {error: response.result.error.message})
+    console.warn('bad news bears:', response.result.error.message);
+    return response.error;
   });
 }
 
