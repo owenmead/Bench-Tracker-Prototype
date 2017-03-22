@@ -1,5 +1,7 @@
 const initial_state = {
   isSignedIn: false,
+  userRequest: null, // could be used to display when waiting for user input
+  profile: null
 }
 
 const foo = (state=initial_state, action) => {
@@ -7,12 +9,20 @@ const foo = (state=initial_state, action) => {
     case 'USER_SIGNIN':
       return {
         ...state,
-        isSignedIn: true
+        userRequest: 'SIGNIN'
       }
     case 'USER_SIGNOUT':
       return {
         ...state,
-        isSignedIn: false
+        userRequest: 'SIGNOUT',
+        profile: null
+      }
+    case 'GOOGLE_AUTHCHANGE':
+      return {
+        ...state,
+        isSignedIn: action.isSignedIn,
+        userRequest: null,
+        profile: action.profile
       }
 
     default:
