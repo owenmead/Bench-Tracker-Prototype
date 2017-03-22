@@ -4,6 +4,7 @@ import './App.css';
 import {clients, viewData } from './data'
 
 import ClientList from './ClientList/ClientList'
+import GoogleAuthy from './GoogleAPI/GoogleAuthy'
 import MonthHeader from './MonthHeader'
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
       <div className="App">
         <MonthHeader monthsToDisplay={viewData.monthsToDisplay} />
         <ClientList list={list} />
+        <GoogleAuthy />
       </div>
     );
   }

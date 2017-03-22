@@ -6,12 +6,9 @@ import {viewData } from '../../data'
 
 const AccountRow = ({account}) => {
 
-  var status = [];
-  Object.keys(account.status)
+  var status = Object.keys(account.status)
     .filter(k => viewData.monthsToDisplay.indexOf(k) !== -1)
-    .sort().map((k, index) => {
-      status.push(<AccountStatus key={index} status={account.status[k]} />)
-    });
+    .sort().map((k, index) => <AccountStatus key={index} status={account.status[k]} />);
 
   return <div className="AccountRow">
     <span className="AccountRowName">{account.name}</span>
