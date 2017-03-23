@@ -8,6 +8,12 @@ export const google_authchange = (isSignedIn) => {
   }
 }
 
+export const google_sheets_api_ready = () => {
+  return {
+    type: 'SHEETS_API_READY'
+  }
+}
+
 // API will fire a GOOGLE_AUTHCHANGE when complete
 export const user_signin = () => {
   API.signIn();

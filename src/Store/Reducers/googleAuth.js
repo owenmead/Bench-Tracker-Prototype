@@ -4,7 +4,7 @@ const initial_state = {
   profile: null
 }
 
-const foo = (state=initial_state, action) => {
+const googleAuth = (state=initial_state, action) => {
   switch (action.type) {
     case 'USER_SIGNIN':
       return {
@@ -30,4 +30,4 @@ const foo = (state=initial_state, action) => {
   }
 }
 
-export default foo
+export default googleAuth

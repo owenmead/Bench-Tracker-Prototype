@@ -4,13 +4,15 @@ var authChangeObservers = [];
 // Will likely need an unsubscribe
 
 var API_OBJ = {
+  init: init,
+
   isSignedIn: false,
   signIn: () => gapi.auth2.getAuthInstance().signIn(),
   signOut: () => gapi.auth2.getAuthInstance().signOut(),
   listenAuthChange: listener => authChangeObservers.push(listener),
   getProfile: getProfile,
 
-  getMajors: getMajors
+  getMajors: getMajors,
 };
 
 export default API_OBJ;
@@ -34,7 +36,7 @@ var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"
 var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
 
 
-function init() {
+function init(readyCallback) {
   gapi.load('client:auth2', () => {
     gapi.client.init({
       discoveryDocs: DISCOVERY_DOCS,
@@ -45,6 +47,10 @@ function init() {
       gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
       // Handle the initial sign-in state.
       updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+
+      if (readyCallback) {
+        readyCallback();
+      }
     });
   })
 }
@@ -90,5 +96,3 @@ function getMajors() {
     return response.error;
   });
 }
-
-init();
