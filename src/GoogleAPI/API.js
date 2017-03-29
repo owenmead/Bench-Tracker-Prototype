@@ -20,13 +20,14 @@ export default API_OBJ;
 /*
 * Google oAuth
 * client id
-* 292874472302-tblbbqs8phl4fft8gg30pqnepg6ec1ug.apps.googleusercontent.com
+* ----to_be_filled_in---------
 * client secret
-* eGEbL-5BLWsZQMK1tOJeQxhv
+* ----to_be_filled_in---------
 */
 
 // Client ID and API key from the Developer Console
-var CLIENT_ID = '292874472302-tblbbqs8phl4fft8gg30pqnepg6ec1ug.apps.googleusercontent.com';
+var CLIENT_ID = 'set id here';
+console.error('CLIENT_ID not set')
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
@@ -77,12 +78,13 @@ function getProfile() {
 
 /**
  * Print the names and majors of students in a sample spreadsheet:
- * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+ * https://docs.google.com/spreadsheets/d/1Ad0z0tTEVTyZTccXDuh-XRKkGFv4DFqQEgYzSwZlzlg/edit
  */
 function getMajors() {
+  console.error('spreadsheetId not set')
   return gapi.client.sheets.spreadsheets.values.get({
-    spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'Class Data!A2:E',
+    spreadsheetId: 'INSERT ID HERE',
+    range: 'Owen Tracker!B3:AA11',
   }).then(function(response) {
     var range = response.result;
     if (range.values.length > 0) {

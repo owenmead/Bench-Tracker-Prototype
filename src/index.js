@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './Store/Reducers/index.js';
 import App from './App';
 import API from './GoogleAPI/API'
-import { google_authchange, google_sheets_api_ready } from './Store/Actions/index.js'
+import { google_authchange, google_sheets_api_ready, init_main_view } from './Store/Actions/index.js'
 
 import './index.css';
 
@@ -21,6 +21,7 @@ API.listenAuthChange(isSignedIn => {
 });
 API.init(() => {
   store.dispatch(google_sheets_api_ready())
+  store.dispatch(init_main_view())
 });
 
 render(

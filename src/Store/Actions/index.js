@@ -14,6 +14,12 @@ export const google_sheets_api_ready = () => {
   }
 }
 
+export const init_main_view = () => {
+  return {
+    type: 'INIT_MAIN_VIEW'
+  }
+}
+
 // API will fire a GOOGLE_AUTHCHANGE when complete
 export const user_signin = () => {
   API.signIn();

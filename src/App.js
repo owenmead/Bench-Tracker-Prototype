@@ -13,9 +13,12 @@ class App extends Component {
 
     return (
       <div className="App">
+        <GoogleAuthy />
+
+        <hr />
+
         <MonthHeader monthsToDisplay={viewData.monthsToDisplay} />
         <ClientList list={list} />
-        <GoogleAuthy />
       </div>
     );
   }
